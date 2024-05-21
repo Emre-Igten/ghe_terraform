@@ -1,0 +1,81 @@
+name: Configure the Organization
+
+on: 
+  workflow_dispatch:
+#   push:
+#     branches:
+#       - main
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+
+
+    - name: Set GitHub Token
+     # The secret should be the one you added to your repository (Should be a PAT with admin permissions)
+      run: echo "GITHUB_TOKEN=${{ secrets.ADMIN_TOKEN2 }}" >> $GITHUB_ENV
+
+
+
+    - name: Terraform Init
+      run: terraform init
+
+
+    
+    - name: Set Org
+    # Change the value of GITHUB_OWNER to the name of the organization you want to configure.
+      run: |
+        echo "GITHUB_OWNER=DLW-TEST-DEMO3" >> $GITHUB_ENV
+    
+
+    
+    # Add the modules you want to run as seen below (-target="module.name")
+    
+    # CREATE REPOSITORIES AND TEAMS HERE
+    - name: Terraform Plan - Create Team and Repository
+      run: |
+        terraform plan -out=tfplan2 -target="module.create-repository-frontend" -target="module.create-repository-backend" -target="module.create-team" -target="module.create-team2" -target="module.create-team3" 
+
+
+
+
+    - name: Terraform Apply - Create Team and Repository
+      run: |
+        terraform apply "tfplan2"
+
+
+  # CREATE BRANCHES HERE
+    - name: Terraform Plan - Create Branch
+      run: |
+        terraform plan -out=tfplan2 -target="module.create-branchfrontend" -target="module.create-branchfrontend2" -target="module.create-branchbackend" -target="module.create-branchbackend2"
+
+    
+    - name: Terraform Apply - Create Branch
+      run: |
+        terraform apply "tfplan2"
+
+
+  # ADD OTHER CONFIGS      
+    - name: Terraform Plan - Team, Repo and branch configuration
+      run: |
+        terraform plan -out=tfplan2 -target="module.add-branch-protectionfrontend" -target="module.add-branch-protectionbackend" -target="module.add-team-memberadmin" -target="module.add-team-memberdeveloper" -target="module.add-team-membertester" -target="module.add-team-repository-permissionsadmins" -target="module.add-team-repository-permissionsadmins2" -target="module.add-team-repository-permissionsdevs" -target="module.add-team-repository-permissionsdevs2" -target="module.add-team-repository-permissionstesters" -target="module.add-team-repository-permissionstesters2" -target="module.add-branch-protection" -target="module.add-branch-protectionbackend" -target="module.add-branch-protectionfrontend" -target="module.add-organization-member"  -target="module.create-filefrontend" -target="module.create-filebackend"
+
+
+    - name: Terraform Apply - Team Configuration
+      run: |
+        terraform apply "tfplan2"
+
+
+    
+
+
