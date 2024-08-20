@@ -48,7 +48,7 @@ jobs:
 
       - name: Terraform Plan - Create Team and Repository
         run: |
-          terraform plan -out=tfplan2 -target="add-policies"
+          terraform plan -out=tfplan2 -target="add-branch-protection"
   
   
       - name: Terraform Apply - Create Team and Repository
