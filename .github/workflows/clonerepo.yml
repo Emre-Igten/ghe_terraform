@@ -46,12 +46,12 @@ jobs:
         run: terraform init
 
 
-      - name: Terraform Plan - Create Team and Repository
+      - name: Terraform Create Policies
         run: |
-          terraform plan -out=tfplan2 -target="add-branch-protection"
+          terraform plan -out=tfplan3 -target="add-branch-protection"
   
   
-      - name: Terraform Apply - Create Team and Repository
+      - name: Terraform Create Policies
         run: |
-          terraform apply "tfplan2"
+          terraform apply "tfplan3"
   
