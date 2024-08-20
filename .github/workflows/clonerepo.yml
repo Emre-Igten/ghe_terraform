@@ -1,10 +1,10 @@
 name: Clone from Azure DevOps and Push to GitHub
 
 on:
-#   workflow_dispatch:
-  push:
-    branches:
-     - main
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #    - main
 
 jobs:
   clone-and-push:
@@ -85,7 +85,7 @@ jobs:
 
       - name: Terraform Add Team Repository Permissions
         run: |
-          terraform plan -out=tfplan4 -target="module.add-team-repository-permissionsadmin" -target="module.add-team-repository-permissionstesters" -target="module.add-team-repository-permissionsdevs"
+          terraform plan -out=tfplan4 -target="module.add-team-repository-permissionsadmins" -target="module.add-team-repository-permissionstesters" -target="module.add-team-repository-permissionsdevs"
 
       - name: Terraform Add Team Repository Permissions
         run: |
