@@ -22,6 +22,15 @@ jobs:
         run: |
           git clone https://defoortd:${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/defoortd/bachelorproef%20Emre/_git/bachelorproef%20Emre bpPoc
 
+      - name: Create GitHub repository
+        env:
+          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.ADMIN_PAT }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -d '{"name":"bpPOC","private":false}' \
+              https://api.github.com/user/repos || echo "Repository creation failed or already exists"
+  
       - name: Push to GitHub repository
         env:
           GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
