@@ -56,5 +56,5 @@ jobs:
   
       - name: Terraform Create Policies
         run: |
-          terraform apply
+          terraform apply -auto-approve
   
