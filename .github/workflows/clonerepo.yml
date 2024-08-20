@@ -26,7 +26,7 @@ jobs:
         run: |
           cd bpPoc
           git remote add github https://github.com/Emre-Igten/bpPOC.git
-          git push github master
+          git push github main
 
 
     #   - name: Set up Terraform
