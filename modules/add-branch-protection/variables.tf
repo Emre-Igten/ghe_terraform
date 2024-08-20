@@ -94,6 +94,43 @@ variable "require_code_owner_reviews" {
   
 }
 
+variable "allowed_users" {
+    description = "The list of user logins with push access."
+    type = list(string)
+  
+}
+
+variable "allowed_teams" {
+    description = "The list of team slugs with push access."
+    type = list(string)
+  
+}
+
+variable "allowed_apps" {
+    description = "The list of app slugs with push access."
+    type = list(string)
+  
+}
+
+variable "dismissal_users" {
+    description = "The list of user logins with push access."
+    type = list(string)
+  
+}
+
+variable "dismissal_teams" {
+    description = "The list of team slugs with push access."
+    type = list(string)
+  
+}
+
+variable "dismissal_apps" {
+    description = "The list of app slugs with push access."
+    type = list(string)
+  
+}
+
+
 
 
   
