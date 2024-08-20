@@ -22,7 +22,7 @@ jobs:
       - name: Set Org
       # Change the value of GITHUB_OWNER to the name of the organization you want to configure.
         run: |
-          echo "emre-poc" >> $GITHUB_ENV
+          echo "GITHUB_OWNER=emre-poc" >> $GITHUB_ENV
 
       - name: Clone Azure DevOps repository
         env:
