@@ -94,12 +94,12 @@ module "add-branch-protection" {
   require_last_push_approval      = true
   dismiss_stale_reviews           = true
 
-  dismissal_users = ["igtene_dlwr"]
+  dismissal_users = ["Emre-Igten"]
   dismissal_teams = ["admins"]
   dismissal_apps  = ["allowedApp"]
 
   # Bypass pull request permissions
-  allowed_users = ["igtene_dlwr"]
+  allowed_users = ["Emre-Igten"]
   allowed_teams = ["admins"]
   allowed_apps  = ["allowedApp"]
 }
