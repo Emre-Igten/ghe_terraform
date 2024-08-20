@@ -18,12 +18,10 @@ jobs:
 
       - name: Clone Azure DevOps repository
         run: |
-          cd C:\Users\Gebruiker\Desktop\SCHOOL\S2
           git clone https://defoortd@dev.azure.com/defoortd/bachelorproef%20Emre/_git/bachelorproef%20Emre
       
       - name: Push to GitHub repository
         run: |      
-          cd C:\Users\Gebruiker\Desktop\SCHOOL\S2
           git remote add github https://github.com/Emre-Igten/bpPOC.git
           git push github master
 
