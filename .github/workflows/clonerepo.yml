@@ -22,7 +22,7 @@ jobs:
       
       - name: Set GitHub Token
      # The secret should be the one you added to your repository (Should be a PAT with admin permissions)
-        run: echo "GITHUB_TOKEN=${{ secrets.CONFIG_TOKEN }}" >> $GITHUB_ENV
+        run: echo "GITHUB_TOKEN=${{ secrets.MAIN_PAT }}" >> $GITHUB_ENV
 
       - name: Set Org
       # Change the value of GITHUB_OWNER to the name of the organization you want to configure.
