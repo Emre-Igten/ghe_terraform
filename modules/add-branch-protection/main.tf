@@ -20,4 +20,6 @@ resource "github_branch_protection_v3" "example" {
 
 }
 
+}
+
   
