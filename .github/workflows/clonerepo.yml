@@ -1,7 +1,10 @@
 name: Clone from Azure DevOps and Push to GitHub
 
 on:
-  workflow_dispatch:  # Hiermee kun je de workflow handmatig starten
+#   workflow_dispatch:
+  push:
+    branches:
+     - main
 
 jobs:
   clone-and-push:
@@ -48,10 +51,10 @@ jobs:
 
       - name: Terraform Create Policies
         run: |
-          terraform plan -out=tfplan3 -target="add-branch-protection"
+          terraform plan 
   
   
       - name: Terraform Create Policies
         run: |
-          terraform apply "tfplan3"
+          terraform apply
   
