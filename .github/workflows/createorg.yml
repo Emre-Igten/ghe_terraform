@@ -1,10 +1,10 @@
 name: Create Organization
 
 on: 
-  workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  # workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   terraform:
@@ -34,8 +34,9 @@ jobs:
 
     # Has to run before the other modules
     - name: Terraform Plan
-      run: terraform plan -out=tfplan -target="module.create-organization"
+      run: terraform plan 
 
 
     - name: Terraform Apply
-      run: terraform apply "tfplan"
+      run: terraform apply
+      
