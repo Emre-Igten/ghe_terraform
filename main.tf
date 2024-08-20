@@ -9,26 +9,48 @@ module "add-organization-member" {
 module "create-team" {
   source = "./modules/create-team"
 
-  name        = "Developers"
-  description = "Developers team"
-  privacy     = "closed"
+  team_name        = "Developers"
+  team_description = "Developers team"
+  team_privacy     = "closed"
 
 }
 module "create-team2" {
   source = "./modules/create-team"
 
-  name        = "Testers"
-  description = "Testers team"
-  privacy     = "closed"
+  team_name        = "Testers"
+  team_description = "Testers team"
+  team_privacy     = "closed"
 
 }
 module "create-team3" {
   source = "./modules/create-team"
 
-  name        = "Admins"
-  description = "Admins team"
-  privacy     = "closed"
+  team_name        = "Admins"
+  team_description = "Admins team"
+  team_privacy     = "closed"
 
+}
+
+
+module "add-team-memberadmin" {
+  source   = "./modules/add-team-member"
+  team_id  = "admins"
+  username = "Emre-Igten"
+  role     = "maintainer"
+}
+
+module "add-team-membertester" {
+  source   = "./modules/add-team-member"
+  team_id  = "testers"
+  username = "Emre-Igten"
+  role     = "maintainer"
+}
+
+module "add-team-memberdeveloper" {
+  source   = "./modules/add-team-member"
+  team_id  = "developers"
+  username = "Emre-Igten"
+  role     = "maintainer"
 }
 
 
@@ -72,9 +94,9 @@ module "add-branch-protection" {
   require_last_push_approval      = true
   dismiss_stale_reviews           = true
 
-  dismissal_users       = ["igtene_dlwr"]
-  dismissal_teams       = ["admins"]
-  dismissal_apps        = ["allowedApp"]
+  dismissal_users = ["igtene_dlwr"]
+  dismissal_teams = ["admins"]
+  dismissal_apps  = ["allowedApp"]
 
   # Bypass pull request permissions
   allowed_users = ["igtene_dlwr"]

@@ -59,13 +59,44 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Terraform Add Organization Membership
+        run: |
+          terraform plan -out=tfplan -target="module.add-organization-membership"
+    
+      - name: Terraform Add Organization Membership
+        run: |
+          terraform apply "tfplan"
+
+      - name: Terraform Create Teams
+        run: |
+          terraform plan -out=tfplan2 -target="module.create-team" -target="module.create-team2" -target="module.create-team3"
+
+      - name: Terraform Create Teams
+        run: |
+          terraform apply "tfplan2"
+
+      - name: Terraform Add Team Membership
+        run: |
+          terraform plan -out=tfplan3 -target="module.add-team-memberadmin" -target="module.add-team-membertester" -target="module.add-team-memberdeveloper"
+    
+      - name: Terraform Add Team Membership
+        run: |
+          terraform apply "tfplan3"
+
+      - name: Terraform Add Team Repository Permissions
+        run: |
+          terraform plan -out=tfplan4 -target="module.add-team-repository-permissionsadmin" -target="module.add-team-repository-permissionstesters" -target="module.add-team-repository-permissionsdevs"
+
+      - name: Terraform Add Team Repository Permissions
+        run: |
+          terraform apply "tfplan4"
 
       - name: Terraform Create Policies
         run: |
-          terraform plan 
+          terraform plan -out=tfplan5 -target="module.add-branch-protection"
   
   
       - name: Terraform Create Policies
         run: |
-          terraform apply -auto-approve
+          terraform apply "tfplan5"
   
