@@ -37,20 +37,20 @@ jobs:
 
       - name: Create GitHub repository in organization
         env:
-          GITHUB_PAT: ${{ secrets.MAIN_PAT }}
+          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
-          curl -X POST -H "Authorization: token ${{ secrets.MAIN_PAT }}" \
+          curl -X POST -H "Authorization: token ${{ secrets.ADMIN_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"name":"bpPOC","private":false}' \
             https://api.github.com/orgs/${{ env.GITHUB_OWNER }}/repos || echo "Repository creation failed or already exists"
 
       - name: Push to GitHub repository
         env:
-          GITHUB_PAT: ${{ secrets.MAIN_PAT }}
+          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
           cd bpPoc
           git remote add github https://github.com/${{ env.GITHUB_OWNER }}/bpPOC.git
-          git push https://x-access-token:${{ secrets.MAIN_PAT }}@github.com/${{ env.GITHUB_OWNER }}/bpPOC.git main
+          git push https://x-access-token:${{ secrets.ADMIN_PAT }}@github.com/${{ env.GITHUB_OWNER }}/bpPOC.git main
 
 
       - name: Set up Terraform
