@@ -1,0 +1,12 @@
+# .github/CODEOWNERS
+
+# Dit bestand specificeert de eigenaren voor verschillende delen van de codebase.
+
+# Specificeer gebruikers of teams als code eigenaren voor bepaalde paden.
+# Gebruik '@' gevolgd door de gebruikersnaam of teamnaam.
+
+# Voeg automatisch reviewer toe voor alle bestanden
+* @team/maintainers
+
+# Voeg automatisch reviewer toe voor een specifiek pad
+/docs/ @team/docs

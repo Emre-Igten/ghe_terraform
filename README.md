@@ -146,3 +146,12 @@ We add team members to the "Developers," "Testers," and "Admins" teams. (Only my
 Adding Files:  
 Create a README file in the development branch in both repositories.  
 
+
+
+
+# EP3
+
+## info
+
+- Policy voor linked work items bestaat niet op github
+- Laatste policy kan worden toegevoegd door een CODEOWNERS bestand toe te voegen aan de repo.

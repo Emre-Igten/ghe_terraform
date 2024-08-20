@@ -1,0 +1,23 @@
+name: Auto Assign Reviewers
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add reviewers based on changed files
+        uses: github-actions/auto-assign-reviewers@v1
+        with:
+          reviewers: |
+            user1,user2
+          teams: |
+            team1,team2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

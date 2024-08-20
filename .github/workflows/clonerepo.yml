@@ -11,47 +11,47 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v4
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-
-      - name: Clone Azure DevOps repository
-        env:
-          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
-        run: |
-          git clone https://defoortd:${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/defoortd/bachelorproef%20Emre/_git/bachelorproef%20Emre bpPoc
-
-      - name: Create GitHub repository
-        env:
-          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
-        run: |
-          curl -X POST -H "Authorization: token ${{ secrets.ADMIN_PAT }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -d '{"name":"bpPOC","private":false}' \
-              https://api.github.com/user/repos || echo "Repository creation failed or already exists"
-  
-      - name: Push to GitHub repository
-        env:
-          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
-        run: |
-          cd bpPoc
-          git remote add github https://github.com/Emre-Igten/bpPOC.git
-          git push https://x-access-token:${{ secrets.ADMIN_PAT }}@github.com/Emre-Igten/bpPOC.git main
-
-    #   - name: Set up Terraform
-    #     uses: hashicorp/setup-terraform@v1
-
-    #   - name: Terraform Init
-    #     run: terraform init
-
-
-    #   - name: Terraform Plan - Create Team and Repository
+    #   - name: Set up Git
     #     run: |
-    #       terraform plan -out=tfplan2 -target="
-  
-  
-    #   - name: Terraform Apply - Create Team and Repository
+    #       git config --global user.name "GitHub Actions"
+    #       git config --global user.email "actions@github.com"
+
+    #   - name: Clone Azure DevOps repository
+    #     env:
+    #       AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
     #     run: |
-    #       terraform apply "tfplan2"
+    #       git clone https://defoortd:${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/defoortd/bachelorproef%20Emre/_git/bachelorproef%20Emre bpPoc
+
+    #   - name: Create GitHub repository
+    #     env:
+    #       GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
+    #     run: |
+    #       curl -X POST -H "Authorization: token ${{ secrets.ADMIN_PAT }}" \
+    #           -H "Accept: application/vnd.github.v3+json" \
+    #           -d '{"name":"bpPOC","private":false}' \
+    #           https://api.github.com/user/repos || echo "Repository creation failed or already exists"
+  
+    #   - name: Push to GitHub repository
+    #     env:
+    #       GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
+    #     run: |
+    #       cd bpPoc
+    #       git remote add github https://github.com/Emre-Igten/bpPOC.git
+    #       git push https://x-access-token:${{ secrets.ADMIN_PAT }}@github.com/Emre-Igten/bpPOC.git main
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+
+      - name: Terraform Plan - Create Team and Repository
+        run: |
+          terraform plan -out=tfplan2 -target="add-policies"
+  
+  
+      - name: Terraform Apply - Create Team and Repository
+        run: |
+          terraform apply "tfplan2"
   
