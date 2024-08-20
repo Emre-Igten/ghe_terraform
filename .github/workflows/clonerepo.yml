@@ -25,7 +25,7 @@ jobs:
       - name: Push to GitHub repository
         run: |
           cd bpPoc
-          git remote add github https://github.com/your-username/your-repo-name.git
+          git remote add github https://github.com/Emre-Igten/bpPOC.git
           git push github master
 
 
