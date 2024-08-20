@@ -1,4 +1,4 @@
-module "add-policies" {
+module "add-branch-protection" {
   source = "./modules/add-branch-protection"
 
   repository = "bpPOC"
