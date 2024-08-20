@@ -23,11 +23,12 @@ jobs:
           git clone https://defoortd:${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/defoortd/bachelorproef%20Emre/_git/bachelorproef%20Emre bpPoc
 
       - name: Push to GitHub repository
+        env:
+          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
           cd bpPoc
           git remote add github https://github.com/Emre-Igten/bpPOC.git
-          git push github main
-
+          git push https://x-access-token:${{ secrets.ADMIN_PAT }}@github.com/Emre-Igten/bpPOC.git main
 
     #   - name: Set up Terraform
     #     uses: hashicorp/setup-terraform@v1
