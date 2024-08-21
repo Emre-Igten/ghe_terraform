@@ -1,4 +1,4 @@
-name: Clone from Azure DevOps and Push to GitHub
+name: Clone from Azure DevOps and Push to GitHub (MULTI)
 
 on:
   workflow_dispatch:
