@@ -3,7 +3,6 @@ module "add-organization-member" {
 
   username = "Emre-Igten"
   role     = "admin"
-
 }
 
 module "create-team" {
