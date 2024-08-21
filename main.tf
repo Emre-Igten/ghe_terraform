@@ -57,28 +57,34 @@ module "add-team-memberdeveloper" {
 module "add-team-repository-permissionsadmins" {
   source     = "./modules/add-team-repository-permissions"
   team_id    = "admins"
-  repository = var.repo_name
+  repository = "bpPOC"
   permission = "admin"
 }
+
 
 module "add-team-repository-permissionsdevs" {
   source     = "./modules/add-team-repository-permissions"
   team_id    = "developers"
-  repository = var.repo_name
+  repository = "bpPOC"
   permission = "maintain"
 }
+
+
 
 module "add-team-repository-permissionstesters" {
   source     = "./modules/add-team-repository-permissions"
   team_id    = "testers"
-  repository = var.repo_name
+  repository = "bpPOC"
   permission = "pull"
 }
+
+
+
 
 module "add-branch-protection" {
   source = "./modules/add-branch-protection"
 
-  repository                      = var.repo_name
+  repository                      = "bpPOC"
   branch                          = "main"
   enforce_admins                  = true
   require_conversation_resolution = true
@@ -92,9 +98,11 @@ module "add-branch-protection" {
   dismissal_teams = ["admins"]
   dismissal_apps  = ["allowedApp"]
 
+  # Bypass pull request permissions
   allowed_users = ["Emre-Igten"]
   allowed_teams = ["admins"]
   allowed_apps  = ["allowedApp"]
 }
+
 
 
