@@ -1,0 +1,112 @@
+name: Clone from Azure DevOps and Push to GitHub
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clone-and-push:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        repo_name: 
+          - bpPOC
+          - bpPOC2
+          - bpPOC3
+          - bpPOC4
+          - bpPOC5
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Set GitHub Token
+        run: echo "GITHUB_TOKEN=${{ secrets.ADMIN_PAT }}" >> $GITHUB_ENV
+
+      - name: Set Org
+        run: |
+          echo "GITHUB_OWNER=emre-poc" >> $GITHUB_ENV
+
+      - name: Clone Azure DevOps repository
+        env:
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+        run: |
+          git clone https://defoortd:${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/defoortd/bachelorproef%20Emre/_git/bachelorproef%20Emre bpPoc
+
+      - name: Create GitHub repository in organization
+        env:
+          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.ADMIN_PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"name":"${{ matrix.repo_name }}","private":false}' \
+            https://api.github.com/orgs/${{ env.GITHUB_OWNER }}/repos || echo "Repository creation failed or already exists"
+
+      - name: Push to GitHub repository
+        env:
+          GITHUB_PAT: ${{ secrets.ADMIN_PAT }}
+        run: |
+          cd bpPoc
+          git remote add github https://github.com/${{ env.GITHUB_OWNER }}/${{ matrix.repo_name }}.git
+          git push https://x-access-token:${{ secrets.ADMIN_PAT }}@github.com/${{ env.GITHUB_OWNER }}/${{ matrix.repo_name }}.git main
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Add Organization Membership
+        run: |
+          terraform plan -out=tfplan -target="module.add-organization-member" \
+            -var="repo_name=${{ matrix.repo_name }}"
+
+      - name: Terraform Apply Organization Membership
+        run: |
+          terraform apply "tfplan"
+
+      - name: Terraform Create Teams
+        run: |
+          terraform plan -out=tfplan2 -target="module.create-team" \
+            -target="module.create-team2" -target="module.create-team3" \
+            -var="repo_name=${{ matrix.repo_name }}"
+
+      - name: Terraform Apply Teams
+        run: |
+          terraform apply "tfplan2"
+
+      - name: Terraform Add Team Membership
+        run: |
+          terraform plan -out=tfplan3 -target="module.add-team-memberadmin" \
+            -target="module.add-team-membertester" \
+            -target="module.add-team-memberdeveloper" \
+            -var="repo_name=${{ matrix.repo_name }}"
+
+      - name: Terraform Apply Team Membership
+        run: |
+          terraform apply "tfplan3"
+
+      - name: Terraform Add Team Repository Permissions
+        run: |
+          terraform plan -out=tfplan4 -target="module.add-team-repository-permissionsadmins" \
+            -target="module.add-team-repository-permissionstesters" \
+            -target="module.add-team-repository-permissionsdevs" \
+            -var="repo_name=${{ matrix.repo_name }}"
+
+      - name: Terraform Apply Repository Permissions
+        run: |
+          terraform apply "tfplan4"
+
+      - name: Terraform Create Policies
+        run: |
+          terraform plan -out=tfplan5 -target="module.add-branch-protection" \
+            -var="repo_name=${{ matrix.repo_name }}"
+
+      - name: Terraform Apply Policies
+        run: |
+          terraform apply "tfplan5"
